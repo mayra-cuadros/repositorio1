@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Piero Martinez</title>
+  <!-- CDN de Tailwindcss -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-200 to-slate-100 text-slate-900 flex items-center justify-center p-6">
+
+  <div class="w-full max-w-4xl">
+    
+    <div id="launcher" class="flex flex-col items-center gap-4 mb-6">
+      <p class="text-3xl font-bold text-black-600 drop-shadow-md">¡Bienvenido!</p>
+      <p class="text-slate-900 font-medium">Gracias por la clase de GitHub</p>
+      <!-- Botón con mi nombre -->
+      <button id="startBtn"
+        class="px-8 py-4 bg-gradient-to-r from-indigo-400 to-sky-400 rounded-2xl shadow-lg 
+        text-xl font-semibold text-black hover:scale-105 transform transition">
+        Piero Martinez
+      </button>
+    </div>
+
+    <!-- Oculto la app hasta que presione el botón -->
+    <div id="app" class="hidden bg-white/90 border border-slate-300 rounded-lg p-6 shadow-xl">
+
+      <!-- Header: título + búsqueda + volver -->
+      <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 class="text-2xl font-bold text-slate-900 font-sans">Gestor de Notas</h1>
+        <div class="flex items-center gap-3">
+          <input id="search" type="search" placeholder="Buscar notas" 
+            class="px-3 py-2 rounded-md bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-black-400" />
+          <button id="backBtn" class="px-3 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-700 transition">Volver</button>
+        </div>
+      </header>
+
+      <!-- Aqui se muestra el Formulario + Lista de notas -->
+      <main class="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+      
+        <!-- Formulario -->
+        <section class="md:col-span-1 bg-white/80 p-4 rounded-md border border-slate-300 flex flex-col">
+          <h2 class="font-semibold mb-4 text-center text-slate-900">Agregar nota</h2>
+          <form id="noteForm" class="flex flex-col gap-3 flex-1">
+            <input id="noteTitle" type="text" placeholder="Título" 
+              class="px-3 py-2 rounded-md bg-white border border-slate-300 w-full" required />
+            <textarea id="noteBody" rows="8" placeholder="Escribe una nota" 
+              class="px-3 py-2 rounded-md bg-white border border-slate-300 resize-none w-full flex-1"></textarea>
+          
+            <div class="flex gap-2 mt-2">
+              <!-- Botón Guardar -->
+              <button id="saveBtn" type="submit"
+                class="flex-1 px-4 py-2 bg-black rounded-md font-semibold text-white hover:bg-gray-700 transition">
+                Guardar
+              </button>
+              <!-- Botón Cancelar -->
+              <button id="cancelEdit" type="button"
+                class="flex-1 px-4 py-2 bg-slate-300 rounded-md text-slate-900 hover:bg-slate-400 transition">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </section>
+      
+        <!-- Lista de notas con scroll -->
+        <section class="md:col-span-2 overflow-y-auto bg-white/70 p-4 rounded-md border border-slate-300"
+                 style="max-height: calc(4 * 6rem + 1rem);">
+          <div id="notesList" class="space-y-3">
+            <!-- Aquí se muestran las notas -->
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ======================================================================================================= -->
+
+  <!-- Aquí va la lógica en JavaScript -->
+  <script>
+
+    // Guardo notas en localStorage
+    const STORAGE_KEY = 'notas_piero_v1';
+
+    // Traigo los elementos del DOM
+    const startBtn = document.getElementById('startBtn');
+    const launcher = document.getElementById('launcher');
+    const app = document.getElementById('app');
+    const backBtn = document.getElementById('backBtn');
+    const searchInput = document.getElementById('search');
+    const noteForm = document.getElementById('noteForm');
+    const noteTitle = document.getElementById('noteTitle');
+    const noteBody = document.getElementById('noteBody');
+    const saveBtn = document.getElementById('saveBtn');
+    const cancelEdit = document.getElementById('cancelEdit');
+    const notesList = document.getElementById('notesList');
+
+    // Estado de la app
+    let notes = [];
+    let editingId = null;
+
+    // Cargo notas del storage
+    function loadNotes() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        notes = raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.error('Error leyendo localStorage', e);
+        notes = [];
+      }
+    }
+
+    // Guardo notas en storage
+    function saveNotes() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    }
+
+    // Creo un ID único
+    function genId() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    }
+
+    // Escapo HTML para que no rompa mi diseño
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    // Trunco texto largo
+    function truncate(text, max) {
+      if (!text) return '';
+      return text.length <= max ? text : text.slice(0, max - 1) + '…';
+    }
+
+    // Pinto las notas en pantalla
+    function renderNotes(filter = '') {
+      notesList.innerHTML = '';
+      const q = filter.trim().toLowerCase();
+
+      const filtered = notes
+        .filter(n => !q || (n.title + ' ' + n.body).toLowerCase().includes(q))
+        .sort((a,b) => b.updatedAt - a.updatedAt);
+
+      if (filtered.length === 0) {
+        notesList.innerHTML = `<div class="p-6 bg-white/50 border border-slate-300 rounded-md text-slate-500">
+          Aqui se mostrarán las notas.
+        </div>`;
+      } else {
+        filtered.forEach(note => {
+          const item = document.createElement('article');
+          item.className = 'p-4 bg-white/50 border border-slate-300 rounded-md flex flex-col sm:flex-row sm:items-start gap-3';
+          item.innerHTML = `
+            <div class="flex-1">
+              <h3 class="font-semibold text-slate-900">${escapeHtml(note.title || '(sin título)')}</h3>
+              <p class="mt-2 text-slate-700 text-sm whitespace-pre-wrap">${escapeHtml(truncate(note.body || '', 300))}</p>
+            </div>
+            <div class="flex-shrink-0 flex items-start gap-2">
+              <button data-id="${note.id}" class="editBtn px-3 py-1 bg-blue-700 rounded text-sm text-white hover:bg-blue-800 transition">Editar</button>
+              <button data-id="${note.id}" class="deleteBtn px-3 py-1 bg-rose-700 rounded text-sm text-white hover:bg-rose-800 transition">Borrar</button>
+            </div>
+          `;
+          notesList.appendChild(item);
+        });
+
+        // Pongo eventos a los botones
+        notesList.querySelectorAll('.editBtn').forEach(b => b.addEventListener('click', e => startEdit(e.currentTarget.dataset.id)));
+        notesList.querySelectorAll('.deleteBtn').forEach(b => b.addEventListener('click', e => deleteNote(e.currentTarget.dataset.id)));
+      }
+    }
+
+    // Guardo o actualizo nota
+    noteForm.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const title = noteTitle.value.trim();
+      const body = noteBody.value.trim();
+      if (!title && !body) return alert('Escribe un título o contenido para la nota.');
+
+      if (editingId) {
+        // actualiza la nota
+        const idx = notes.findIndex(n => n.id === editingId);
+        if (idx !== -1) {
+          notes[idx].title = title;
+          notes[idx].body = body;
+          notes[idx].updatedAt = Date.now();
+        }
+      } else {
+        // crea una nueva nota
+        notes.push({ id: genId(), title, body, createdAt: Date.now(), updatedAt: Date.now() });
+      }
+
+      saveNotes();
+      renderNotes(searchInput.value);
+      resetForm();
+    });
+
+    // Empiezo a editar la nota
+    function startEdit(id) {
+      const note = notes.find(n => n.id === id);
+      if (!note) return;
+      editingId = id;
+      noteTitle.value = note.title;
+      noteBody.value = note.body;
+      saveBtn.textContent = 'Actualizar';
+      noteTitle.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Cancelo edición
+    cancelEdit.addEventListener('click', (e) => { e.preventDefault(); resetForm(); });
+
+    // Limpio formulario y vuelvo a estado inicial
+    function resetForm() {
+      editingId = null;
+      noteForm.reset();
+      saveBtn.textContent = 'Guardar';
+    }
+
+    // Borro nota
+    function deleteNote(id) {
+      notes = notes.filter(n => n.id !== id);
+      saveNotes();
+      renderNotes(searchInput.value);
+    }
+
+    // Busco notas al escribir en búsqueda
+    searchInput.addEventListener('input', (e) => renderNotes(e.target.value));
+
+    // Vuelvo al launcher
+    backBtn.addEventListener('click', () => {
+      app.classList.add('hidden');
+      launcher.classList.remove('hidden');
+    });
+
+    // Inicio app y cargo notas
+    startBtn.addEventListener('click', () => {
+      launcher.classList.add('hidden');
+      app.classList.remove('hidden');
+      loadNotes();
+      renderNotes();
+      resetForm();
+    });
+
+    // Cargo notas al iniciar la página
+    (function init() {
+      loadNotes();
+      renderNotes();
+    })();
+  </script>
+
+</body>
+</html>
