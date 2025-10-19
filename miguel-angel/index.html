@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Miguel Angel Moscoso Nores</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* Fondo base con degradado */
+    body {
+      background: linear-gradient(to bottom, #6ecbff, #0056d6);
+      position: relative;
+    }
+
+    /* Canvas del efecto de lluvia de muñequitos */
+    canvas#rainCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Animación de aparición */
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 1s ease forwards;
+    }
+  </style>
+</head>
+
+<body class="flex items-center justify-center text-slate-900">
+
+  <!--  Lluvia animada -->
+  <canvas id="rainCanvas"></canvas>
+
+  <!-- 💬 Contenedor principal -->
+  <div class="w-full max-w-4xl p-6 relative z-10 text-center">
+    <div id="inicio" class="flex flex-col items-center gap-5 bg-white/20 backdrop-blur-md p-8 rounded-2xl shadow-2xl">
+      <h1 class="text-4xl font-bold text-white drop-shadow-lg">¡Bienvenido!</h1>
+      <p class="text-white/90 text-lg">Gracias por visitar mi página personal</p>
+      
+      <button id="btnIniciar"
+        class="px-10 py-4 bg-gradient-to-r from-blue-700 to-sky-400 text-white text-xl font-semibold rounded-2xl shadow-lg
+               hover:scale-105 transition transform duration-300">
+        Miguel Angel Moscoso Nores
+      </button>
+    </div>
+
+    <!-- Presentación -->
+    <div id="presentacion" class="hidden text-center mt-10 bg-white/20 backdrop-blur-md p-8 rounded-2xl shadow-2xl">
+<img src="imagenes/foto_miguel.jpg"
+     alt="Foto de Miguel Angel Moscoso Nores"
+     class="w-40 h-40 mx-auto rounded-full object-cover mb-6 shadow-lg border-4 border-white/60">
+
+      <h2 class="text-3xl font-bold text-white mb-3">Miguel Angel Moscoso Nores</h2>
+      <p class="text-white/90 text-lg leading-relaxed">
+        Estudiante de la carrera de <span class="font-semibold text-white">Ingeniería de Sistemas</span>.<br>
+        Soy una persona <span class="font-semibold text-white">autodidacta</span> apasionada por la tecnología y el aprendizaje continuo.
+      </p>
+
+      <button id="btnVolver"
+        class="mt-8 px-8 py-3 bg-white text-blue-700 font-semibold rounded-xl shadow-md hover:bg-slate-200 transition">
+        Volver al inicio
+      </button>
+    </div>
+  </div>
+
+  <!-- Script de animación -->
+  <script>
+    // ----- Lluvia de muñequitos -----
+    const canvas = document.getElementById("rainCanvas");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const img = new Image();
+    img.src = "imagenes/onePiece.gif"; 
+
+    const drops = [];
+    const numDrops = 20; // cantidad de muñequitos que caen
+
+    function createDrop() {
+      return {
+        x: Math.random() * width,
+        y: Math.random() * -height,
+        size: 60 + Math.random() * 40,
+        speed: 0.5 + Math.random() * 1.2,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 0.5
+      };
+    }
+
+    for (let i = 0; i < numDrops; i++) {
+      drops.push(createDrop());
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      drops.forEach(d => {
+        d.y += d.speed;
+        d.rotation += d.rotationSpeed;
+        if (d.y > height + 100) {
+          d.y = Math.random() * -200;
+          d.x = Math.random() * width;
+        }
+        ctx.save();
+        ctx.translate(d.x, d.y);
+        ctx.rotate((d.rotation * Math.PI) / 180);
+        ctx.drawImage(img, -d.size / 2, -d.size / 2, d.size, d.size);
+        ctx.restore();
+      });
+      requestAnimationFrame(draw);
+    }
+
+    img.onload = draw;
+    window.addEventListener("resize", () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    // ----- Interacción -----
+    const inicio = document.getElementById('inicio');
+    const presentacion = document.getElementById('presentacion');
+    const btnIniciar = document.getElementById('btnIniciar');
+    const btnVolver = document.getElementById('btnVolver');
+
+    btnIniciar.addEventListener('click', () => {
+      inicio.classList.add('hidden');
+      presentacion.classList.remove('hidden');
+      presentacion.classList.add('animate-fade-in');
+    });
+
+    btnVolver.addEventListener('click', () => {
+      presentacion.classList.add('hidden');
+      inicio.classList.remove('hidden');
+    });
+  </script>
+
+</body>
+</html>
