@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil FA</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="galaxy-background">
+        <div class="stars" id="stars"></div>
+        <div class="nebula nebula1"></div>
+        <div class="nebula nebula2"></div>
+    </div>
+    <div class="theme-toggle" id="themeToggle">
+        <div class="toggle-slider dark" id="toggleSlider">
+            <span class="toggle-icon" id="toggleIcon">🌙</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-section">
+                <div class="profile-img">
+                    <img src="https://i.pinimg.com/736x/b1/cd/a9/b1cda9ab8e24f77b63d724b645570069.jpg" alt="Profile">
+                </div>
+                <h2 class="profile-name">Frans Almonacid</h2>
+                <p class="profile-title">Desarrollador Frontend/Backend</p>
+                <p class="profile-description">
+                    Me gusta programar y aprender nuevas tecnologias, que me permitan crecer tanto personal como profesionalmente.
+                </p>
+            </div>
+
+            <div class="skills-section">
+                <h3 class="section-title">Conocimientos:</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                        </div>
+                        <div class="skill-name">Java</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
+                        </div>
+                        <div class="skill-name">C#</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                        </div>
+                        <div class="skill-name">Python</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL">
+                        </div>
+                        <div class="skill-name">SQL</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+                        </div>
+                        <div class="skill-name">HTML</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
+                        </div>
+                        <div class="skill-name">CSS</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                        </div>
+                        <div class="skill-name">JavaScript</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                        </div>
+                        <div class="skill-name">PHP</div>
+                    </div>
+                </div>
+
+                <div class="frameworks">
+                    <div class="framework-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg" alt="GSAP">
+                        </div>
+                        <div class="skill-name">GSAP</div>
+                    </div>
+                    <div class="framework-item">
+                        <div class="skill-icon">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                        </div>
+                        <div class="skill-name">React</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 150;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        const themeToggle = document.getElementById('themeToggle');
+        const toggleSlider = document.getElementById('toggleSlider');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                toggleSlider.classList.remove('light');
+                toggleSlider.classList.add('dark');
+                toggleIcon.textContent = '🌙';
+            } else {
+                body.classList.add('light-mode');
+                toggleSlider.classList.remove('dark');
+                toggleSlider.classList.add('light');
+                toggleIcon.textContent = '☀️';
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            document.querySelectorAll('.nebula').forEach((nebula, index) => {
+                const speed = (index + 1) * 15;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                nebula.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        window.addEventListener('load', generateStars);
+
+        document.querySelectorAll('.skill-item, .framework-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

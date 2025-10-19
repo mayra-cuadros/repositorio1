@@ -1,0 +1,63 @@
+.frans-btn {
+  position: relative;
+  background: #000;
+  color: white;
+  padding: 15px 30px 15px 70px;
+  font-size: 18px;
+  border: 2px solid rgba(120, 219, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(120, 219, 255, 0.2);
+  transition: all 0.4s ease;
+  z-index: 1;
+  margin: 10px;
+}
+
+.frans-btn::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  background-image: url('https://i.pinimg.com/736x/b1/cd/a9/b1cda9ab8e24f77b63d724b645570069.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+  border: 2px solid rgba(120, 219, 255, 0.8);
+  box-shadow: 0 0 15px rgba(120, 219, 255, 0.7);
+}
+
+.frans-btn:hover {
+  border-color: rgba(120, 219, 255, 0.6);
+  box-shadow: 0 0 30px rgba(120, 219, 255, 0.4);
+}
+
+.frans-btn-text {
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.frans-letter {
+  display: inline-block;
+  position: relative;
+}
+
+.frans-star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 0;
+}
+.frans-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 3;
+}
