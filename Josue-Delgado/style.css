@@ -1,0 +1,46 @@
+h1{
+    font-size: 36px;
+    color: blue;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+p{
+    font-size: 16px;
+    color: #333333;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+a{
+    color: red;
+    text-decoration: none;
+}
+
+button{
+    background-color: rgb(0, 75, 128);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+label{
+    font-size: 14px;
+    color: #555555;
+    margin-right: 10px;
+}
+
+ul{
+    list-style-type: square;
+    margin-left: 20px;
+    color: #444444;
+}
+
+ol{
+    list-style-type: decimal;
+    margin-left: 20px;
+    color: #444444;
+}
