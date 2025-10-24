@@ -1,0 +1,78 @@
+body.pagina2 {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.imagen-circular{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nombre {
+  margin-top: 20px; 
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+body.pagina1{
+    display: flex;
+    flex-direction: column;    
+    justify-content: center;  
+    align-items: center;      
+    height: 100vh;            
+    background-color: #cecfb4;  
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;       
+}
+
+
+.titulo {
+    font-size: 48px;          
+    color: #222;
+    margin-bottom: 30px;
+}
+
+
+.texto {
+    font-size: 22px;
+    color: #444;
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.enlace {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 30px;
+    transition: color 0.3s;
+}
+
+.enlace:hover {
+    color: #ff0000;
+}
+
+.boton {
+    background-color: #ff4747;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton:hover {
+    background-color: #cc0000;
+}
