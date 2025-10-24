@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botones</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.8s ease;
+    }
+
+    h1 {
+      color: white;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .boton {
+      padding: 12px 25px;
+      margin: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    #boton { background: darkblue; }
+    #volver { background: green; }
+    #salir { background: red; }
+    #nombre { background: yellow; color: black; }
+    #volverInicio { background: white; color: black; border: 2px solid gray; }
+
+    .boton:hover { transform: translateY(-2px); }
+
+    #vacio { display: none; text-align: center; }
+
+    #vacio h1 { color: #333; }
+
+    #miNombre {
+      font-size: 80px;
+      color: white;
+      margin-top: 15px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .mostrar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="principal" class="mostrar">
+    <h1>✨ BOTONES ✨</h1>
+    <button id="boton" class="boton">💬 Frase</button>
+    <button id="nombre" class="boton">👤 Mi nombre</button>
+    <button id="volver" class="boton">⬅️ Volver</button>
+    <button id="salir" class="boton" onclick="window.close()">❌ Salir de la pagina</button>
+    <div id="miNombre">Alessandro Garcia</div>
+  </div>
+
+  <div id="vacio">
+    <h1>😐 Acá no hay nada...</h1>
+    <button class="boton" id="volverInicio">🏠 Volver al inicio</button>
+  </div>
+
+  <script>
+    const principal = document.getElementById('principal');
+    const vacio = document.getElementById('vacio');
+    const botonVolver = document.getElementById('volver');
+    const botonInicio = document.getElementById('volverInicio');
+    const miNombre = document.getElementById('miNombre');
+    const botonNombre = document.getElementById('nombre');
+
+    document.getElementById('boton').addEventListener('click', function() {
+      alert('¡Waaaaaa! 😄');
+    });
+
+    botonNombre.addEventListener('click', function() {
+      miNombre.style.opacity = '1';
+    });
+
+    botonVolver.addEventListener('click', function() {
+      principal.style.display = 'none';
+      vacio.style.display = 'flex';
+      document.body.style.background = 'linear-gradient(135deg, #ff9a9e, #fad0c4)';
+    });
+
+    botonInicio.addEventListener('click', function() {
+      vacio.style.display = 'none';
+      principal.style.display = 'flex';
+      document.body.style.background = 'linear-gradient(135deg, #89f7fe, #66a6ff)';
+    });
+  </script>
+
+</body>
+</html>
