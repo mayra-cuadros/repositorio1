@@ -1,0 +1,63 @@
+.morales-btn {
+  position: relative;
+  background: #000;
+  color: white;
+  padding: 15px 30px 15px 70px;
+  font-size: 18px;
+  border: 2px solid rgba(35, 38, 233, 0.863);
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgb(18, 53, 209);
+  transition: all 0.4s ease;
+  z-index: 1;
+  margin: 10px;
+}
+
+.morales-btn::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  background-image: url('https://i.imgur.com/75dfDyN.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+  border: 2px solid rgb(255, 255, 255);
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+}
+
+.morales-btn:hover {
+  border-color: rgb(255, 255, 255);
+  box-shadow: 0 0 30px rgba(120, 219, 255, 0.4);
+}
+
+.morales-btn-text {
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.morales-letter {
+  display: inline-block;
+  position: relative;
+}
+
+.morales-star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 0;
+}
+.morales-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 3;
+}

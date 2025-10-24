@@ -1,0 +1,248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+header {
+    background-color: #111;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img {
+    width: 80px;
+    border-radius: 10px;
+}
+
+.logo h1 {
+    font-size: 1.6em;
+    color: #f5f5f5;
+}
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.banner-fondo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75);
+    z-index: 1;
+}
+
+.banner-personajes {
+    position: absolute;
+    right: 2%;
+    bottom: 0;
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    z-index: 3;
+    transform: translateX(5%);
+}
+
+.banner .promo {
+    position: absolute;
+    top: 28%;
+    left: 6%;
+    background-color: rgba(0, 0, 0, 0.82);
+    padding: 22px 28px;
+    border-radius: 10px;
+    max-width: 320px;
+    z-index: 4;
+}
+
+.banner .promo h2 {
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.25;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #1a1a1a;
+    padding: 15px;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffcc00;
+    transform: scale(1.05);
+}
+
+.juegos {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.juego {
+    text-align: center;
+    width: 200px;
+    perspective: 1000px;
+}
+
+.card {
+    width: 200px;
+    height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.card .front,
+.card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    backface-visibility: hidden;
+    transition: transform 1s ease;
+    overflow: hidden;
+}
+
+.card .front img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+    display: block;
+}
+
+.card .back {
+    background-color: #111;
+    border: 2px solid #ffcc00;
+    color: #ffcc00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg);
+    font-weight: 700;
+    font-size: 1em;
+    text-align: center;
+    padding: 12px;
+}
+
+.juego:hover .front {
+    transform: rotateY(180deg);
+}
+
+.juego:hover .back {
+    transform: rotateY(360deg);
+}
+
+button {
+    margin-top: 15px;
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-size: 1em;
+    cursor: pointer;
+    color: #000;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+}
+
+button:hover {
+    background-color: #ff9900;
+    color: white;
+    transform: scale(1.06);
+    box-shadow: 0 6px 18px rgba(255,153,0,0.35);
+}
+
+footer {
+    background-color: #111;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    border-top: 1px solid #333;
+}
+
+@media (max-width: 1000px) {
+    .banner {
+        height: 360px;
+    }
+    .banner-personajes {
+        max-height: 120%;
+        right: 1%;
+        transform: translateX(2%);
+    }
+}
+
+@media (max-width: 720px) {
+    .banner {
+        height: 300px;
+    }
+    .banner-personajes {
+        display: none;
+    }
+    .promo {
+        left: 5%;
+        top: 22%;
+        max-width: 260px;
+    }
+    .juegos {
+        gap: 24px;
+    }
+}
+
+.contenido {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.juegos {
+    display: flex;
+    gap: 20px;
+}
+
+.juego {
+    text-align: center;
+}
+
+.formulario-container {
+    width: 300px;
+}
+
+.formulario-container iframe {
+    border: 0;
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+}
+
