@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Adivinanzas</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    }
+
+    .botonera {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .btn1 { background: #e74c3c; }
+    .btn1:hover { background: #ff6b5b; transform: scale(1.1); }
+
+    .btn2 { background: #1abc9c; }
+    .btn2:hover { background: #16a085; transform: scale(1.1); }
+
+    .btn3 { background: #f1c40f; color: #333; }
+    .btn3:hover { background: #f39c12; transform: scale(1.1); }
+
+    .btn4 { background: #9b59b6; }
+    .btn4:hover { background: #8e44ad; transform: scale(1.1); }
+
+    .resultado {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Juego de Adivinanzas</h1>
+
+  <div class="botonera">
+    <button class="btn1" onclick="mostrarAdivinanza(0)">Adivinanza 1</button>
+    <button class="btn2" onclick="mostrarAdivinanza(1)">Adivinanza 2</button>
+    <button class="btn3" onclick="mostrarAdivinanza(2)">Adivinanza 3</button>
+    <button class="btn4" onclick="mostrarAdivinanza(3)">Adivinanza 4</button>
+  </div>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    const adivinanzas = [
+      {
+        pregunta: "Blanca por dentro, verde por fuera. Si quieres que te lo diga, espera.",
+        respuesta: "pera"
+      },
+      {
+        pregunta: "Vuelo de noche, duermo en el día y nunca verás plumas en ala mía.",
+        respuesta: "murciélago"
+      },
+      {
+        pregunta: "Tiene agujas y no sabe coser, tiene números y no sabe leer.",
+        respuesta: "reloj"
+      },
+      {
+        pregunta: "Agua pasa por mi casa, cate de mi corazón.",
+        respuesta: "aguacate"
+      }
+    ];
+
+    function mostrarAdivinanza(indice) {
+      const adivinanza = adivinanzas[indice];
+      const respuestaUsuario = prompt(adivinanza.pregunta);
+      const resultado = document.getElementById("resultado");
+
+      if (!respuestaUsuario) {
+        resultado.textContent = "No escribiste ninguna respuesta 😅";
+        return;
+      }
+
+      if (respuestaUsuario.trim().toLowerCase() === adivinanza.respuesta) {
+        resultado.textContent = "✅ ¡Correcto! Era " + adivinanza.respuesta.toUpperCase() + " 🎉";
+      } else {
+        resultado.textContent = "❌ Incorrecto. La respuesta era " + adivinanza.respuesta.toUpperCase() + ".";
+      }
+    }
+  </script>
+</body>
+</html>
